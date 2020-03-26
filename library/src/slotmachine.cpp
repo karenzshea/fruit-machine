@@ -6,6 +6,7 @@ void introduction(double cost) {
             << "\n"
             << " 🎩🐸👉 welcome 🎰" << "\n"
             << " Hit [enter] to play!" << "\n"
+            << " Type `end` to exit:)" << "\n"
             << " " << cost << " per spin 🐸" << "\n"
             << "\n"
             << "✨✨✨✨✨✨✨✨✨✨✨" << "\n";

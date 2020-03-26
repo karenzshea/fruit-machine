@@ -31,16 +31,21 @@ public:
 
     SlotMachine(Container && _symbols)
         : symbols(std::move(_symbols)), rand(0, std::floor(symbols.size() / 2) - 1) {}
+
     void introduce() {
         std::cout << "   Win on this slot machine:\n";
         printContainer(symbols);
     }
-    double spin(double payment) {
-        payload += payment;
-
+    std::vector<ContentType> getBars() const {
         std::vector<ContentType> result(bars);
         std::transform(begin(result), end(result), begin(result),
                        [&](auto) { return getRandomSymbol(); });
+        return result;
+    }
+    double spin(double payment) {
+        payload += payment;
+
+        auto result = getBars();
 
         printContainer(result);
 
@@ -108,6 +113,7 @@ private:
 template <class T>
 void Play(Player& player, SlotMachine<T>& slot_machine) {
     auto cost = slot_machine.getCostToPlay();
+
     if (player.has() < cost)
         return;
 

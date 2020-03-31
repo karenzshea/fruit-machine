@@ -1,7 +1,7 @@
 ---
 Language:        Cpp
 # BasedOnStyle:  LLVM
-AccessModifierOffset: -2
+AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
@@ -21,14 +21,14 @@ AlwaysBreakTemplateDeclarations: true
 BinPackArguments: true
 BinPackParameters: true
 BraceWrapping:   
-  AfterClass:      false
+  AfterClass:       false
   AfterControlStatement: false
   AfterEnum:       false
-  AfterFunction:   false
-  AfterNamespace:  false
+  AfterFunction:    false
+  AfterNamespace:   false
   AfterObjCDeclaration: false
-  AfterStruct:     false
-  AfterUnion:      false
+  AfterStruct:      false
+  AfterUnion:       false
   AfterExternBlock: false
   BeforeCatch:     false
   BeforeElse:      false

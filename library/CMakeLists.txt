@@ -1,10 +1,12 @@
 project(fruit-machine-library)
 
 set(fm_SOURCES
-    src/player.cpp
     include/player.h
-    src/slotmachine.cpp
+    include/payout.h
     include/slotmachine.h
+    src/player.cpp
+    src/payout.cpp
+    src/slotmachine.cpp
 )
 
 add_library(${PROJECT_NAME} STATIC

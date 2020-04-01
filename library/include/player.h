@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <iostream>
 
-class Player {
+class Player
+{
 public:
     Player(double startMoney);
     void earn(double amt);

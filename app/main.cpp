@@ -1,3 +1,4 @@
+#include "payout.h"
 #include "slotmachine.h"
 
 const double costToPlay{0.25};
@@ -9,9 +10,10 @@ int main()
     Player player{costToPlay * 50};
     player.announceMoney();
 
+    ExponentialMin payoutCalc{};
+
     SlotMachine<std::vector<std::string>> slot_machine{
-        {"🍓", "🍑", "🍈", "🍇", "🍌", "🍋", "🍒", "💣", "💰", "🔔", "💎"}
-    };
+        {"🍓", "🍑", "🍈", "🍇", "🍌", "🍋", "🍒", "💣", "💰", "🔔", "💎"}, payoutCalc};
 
     std::cout << "\n";
     slot_machine.introduce();
@@ -30,7 +32,8 @@ int main()
         play = play && player.has() >= costToPlay;
     }
 
-    std::cout << "   Game over! 💸" << "\n";
+    std::cout << "   Game over! 💸"
+              << "\n";
     player.announceMoney();
     std::cout << "   High score: " << player.getHighScore() << "\n";
     std::cout << "   Play streak: " << player.getPlays() << "\n";

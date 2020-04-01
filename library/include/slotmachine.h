@@ -134,10 +134,11 @@ void Play(Player &player, SlotMachine<T> &slot_machine)
 {
     auto cost = slot_machine.getCostToPlay();
 
-    if (player.has() < cost)
+    auto afford = player.pay(cost);
+
+    if (!afford)
         return;
 
-    player.pay(cost);
     player.play();
 
     auto payout = slot_machine.spin(cost);

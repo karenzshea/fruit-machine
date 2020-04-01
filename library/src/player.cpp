@@ -7,6 +7,7 @@ Player::Player(double startMoney) : money(startMoney)
 void Player::earn(double amt)
 {
     money += amt;
+    highScore = std::max(money, highScore);
 }
 
 bool Player::pay(double amt)
@@ -34,7 +35,6 @@ void Player::play()
     plays += 1;
     if (plays % 10 == 0)
         announceMoney();
-    highScore = std::max(money, highScore);
 }
 
 double const &Player::getHighScore() const

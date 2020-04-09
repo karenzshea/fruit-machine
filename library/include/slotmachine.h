@@ -9,19 +9,9 @@
 #include <string>
 
 #include "payout.h"
+#include "print.h"
 #include "player.h"
 
-void introduction(double cost);
-
-template <class Container>
-void printContainer(Container const &container)
-{
-    for (auto const &c : container)
-    {
-        std::cout << c;
-    }
-    std::cout << "\n";
-}
 
 template <class Container>
 class SlotMachine
@@ -43,10 +33,10 @@ public:
         payouts = method.calculate(minPayout, maxPayout, symbols.size());
     }
 
-    void introduce()
+    void describe() const
     {
-        std::cout << "   Win on this slot machine:\n";
-        printContainer(symbols);
+        io::emit("Win on this slot machine: ");
+        io::emitContainer(symbols);
     }
     std::vector<ContentType> getBars()
     {
@@ -61,7 +51,7 @@ public:
 
         auto result = getBars();
 
-        printContainer(result);
+        io::emitContainer(result);
 
         auto payout = processPayout(result);
 
@@ -145,7 +135,7 @@ void Play(Player &player, SlotMachine<T> &slot_machine)
 
     if (payout > 0.0)
     {
-        std::cout << "   You won " << payout << "! ✨✨✨" << std::endl;
+        io::emit("You won ", payout, "! ✨✨✨");
         player.earn(payout);
         player.announceMoney();
     }

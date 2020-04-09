@@ -5,6 +5,7 @@ project(fruit-machine LANGUAGES CXX C)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # for ycm
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_TYPE Debug)
 
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wall -Wextra -pedantic -std=c++14")
 

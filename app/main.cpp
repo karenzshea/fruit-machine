@@ -1,11 +1,12 @@
 #include "payout.h"
+#include "print.h"
 #include "slotmachine.h"
 
 const double costToPlay{0.25};
 
 int main()
 {
-    introduction(costToPlay);
+    io::introduction(costToPlay);
 
     Player player{costToPlay * 50};
     player.announceMoney();
@@ -16,7 +17,7 @@ int main()
         {"🍓", "🍑", "🍈", "🍇", "🍌", "🍋", "🍒", "💣", "💰", "🔔", "💎"}, payoutCalc};
 
     std::cout << "\n";
-    slot_machine.introduce();
+    slot_machine.describe();
 
     bool play = true;
     while (play)

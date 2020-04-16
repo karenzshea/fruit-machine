@@ -1,14 +1,20 @@
 #include "payout.h"
+#include "logging.h"
 #include "slotmachine.h"
 
 const double costToPlay{0.25};
 
 int main()
 {
+    io::log Log;
+
     introduction(costToPlay);
+    // ? load intro from text file
+    // Log << introduction;
 
     Player player{costToPlay * 50};
-    player.announceMoney();
+
+    player.infoMoney(Log);
 
     ExponentialMin payoutCalc{};
 
@@ -17,6 +23,7 @@ int main()
 
     std::cout << "\n";
     slot_machine.introduce();
+    // Log << slot_machine.info() << "\n";
 
     bool play = true;
     while (play)
@@ -25,11 +32,17 @@ int main()
         std::getline(std::cin, input);
 
         if (input == "end")
+        {
             play = false;
+            break;
+        }
 
         Play(player, slot_machine);
 
         play = play && player.has() >= costToPlay;
+
+        // if (player.getPlays() % 10 == 0)
+        //     Log << player.has();
     }
 
     std::cout << "   Game over! 💸"

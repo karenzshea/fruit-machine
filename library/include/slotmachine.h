@@ -147,7 +147,6 @@ void Play(Player &player, SlotMachine<T> &slot_machine)
     {
         std::cout << "   You won " << payout << "! ✨✨✨" << std::endl;
         player.earn(payout);
-        player.announceMoney();
     }
 }
 

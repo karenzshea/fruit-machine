@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "logging.h"
+
 class Player
 {
 public:
@@ -11,7 +13,7 @@ public:
     void earn(double amt);
     bool pay(double amt);
     double const &has() const;
-    void announceMoney();
+    void infoMoney(io::log& log);
     void play();
     double const &getHighScore() const;
     unsigned int getPlays() const;

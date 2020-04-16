@@ -25,16 +25,14 @@ double const &Player::has() const
     return money;
 }
 
-void Player::announceMoney()
+void Player::infoMoney(io::log& log)
 {
-    std::cout << "   You have " << money << " ! 💰" << std::endl;
+    log << "You have" << money << "! 💰\n";
 }
 
 void Player::play()
 {
     plays += 1;
-    if (plays % 10 == 0)
-        announceMoney();
 }
 
 double const &Player::getHighScore() const

@@ -16,3 +16,6 @@ add_library(${PROJECT_NAME} STATIC
 target_include_directories(fruit-machine-library
     PUBLIC include
 )
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE fruit-machine-io
+)

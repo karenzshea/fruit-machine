@@ -8,6 +8,10 @@ add_executable(${PROJECT_NAME}
     ${app_SOURCES}
 )
 
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE fruit-machine-io
+)
 target_link_libraries(${PROJECT_NAME}
     PRIVATE fruit-machine-library
 )

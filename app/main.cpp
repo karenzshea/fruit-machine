@@ -1,3 +1,4 @@
+#include "logging.h"
 #include "payout.h"
 #include "slotmachine.h"
 

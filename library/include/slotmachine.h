@@ -5,6 +5,7 @@
 #include <cassert>
 #include <iomanip>
 #include <iostream>
+#include <optional>
 #include <random>
 #include <string>
 
@@ -55,22 +56,18 @@ public:
                        [&](auto) mutable { return getRandomSymbol(); });
         return result;
     }
-    double spin(double payment)
+    std::vector<ContentType> spin(double payment)
     {
         payload += payment;
 
         auto result = getBars();
 
-        printContainer(result);
-
-        auto payout = processPayout(result);
-
-        return payout;
+        return result;
     }
 
-    double processPayout(std::vector<ContentType> const &result)
+    std::optional<double> processPayout(std::vector<ContentType> const &result)
     {
-        double payout = 0.0;
+        std::optional<double> payout;
 
         auto same = std::all_of(begin(result), end(result), [&](auto const &v) {
             return result.front() == v;
@@ -81,6 +78,7 @@ public:
             size_t pos = std::distance(
                 begin(symbols),
                 std::find(begin(symbols), end(symbols), result.front()));
+            // payouts, keyed by symbols?
             auto pct = payouts.at(pos);
             payout = payload * pct;
         }
@@ -141,12 +139,16 @@ void Play(Player &player, SlotMachine<T> &slot_machine)
 
     player.play();
 
-    auto payout = slot_machine.spin(cost);
+    auto result = slot_machine.spin(cost);
 
-    if (payout > 0.0)
+    printContainer(result);
+
+    auto payout = slot_machine.processPayout(result);
+
+    if (payout)
     {
-        std::cout << "   You won " << payout << "! ✨✨✨" << std::endl;
-        player.earn(payout);
+        std::cout << "   You won " << *payout << "! ✨✨✨" << std::endl;
+        player.earn(*payout);
         player.announceMoney();
     }
 }

@@ -2,6 +2,7 @@ project(fruit-machine)
 
 set(app_SOURCES
     main.cpp
+    introduction.h
 )
 
 add_executable(${PROJECT_NAME}

@@ -1,15 +1,18 @@
 #include "logging.h"
 #include "payout.h"
 #include "slotmachine.h"
+#include "introduction.h"
 
 const double costToPlay{0.25};
 
 int main()
 {
-    introduction(costToPlay);
+    Introduction intro{costToPlay};
+
+    io::print(intro.text, "\n");
 
     Player player{costToPlay * 50};
-    player.announceMoney();
+    player.infoMoney();
 
     ExponentialMin payoutCalc{};
 
@@ -17,7 +20,7 @@ int main()
         {"🍓", "🍑", "🍈", "🍇", "🍌", "🍋", "🍒", "💣", "💰", "🔔", "💎"}, payoutCalc};
 
     std::cout << "\n";
-    slot_machine.introduce();
+    slot_machine.info();
 
     bool play = true;
     while (play)
@@ -33,11 +36,11 @@ int main()
         play = play && player.has() >= costToPlay;
     }
 
-    std::cout << "   Game over! 💸"
-              << "\n";
-    player.announceMoney();
-    std::cout << "   High score: " << player.getHighScore() << "\n";
-    std::cout << "   Play streak: " << player.getPlays() << "\n";
-    std::cout << "   Slot machine made: " << slot_machine.getPayload() << "\n";
-    std::cout << std::endl;
+    io::print("Game over! 💸\n");
+
+    player.infoMoney();
+
+    io::print(" ", "High score:", std::to_string(player.getHighScore()), "\n");
+    io::print(" ", "Play streak:", std::to_string(player.getPlays()), "\n");
+    io::print(" ", "Slot machine made:", std::to_string(slot_machine.getPayload()), "\n");
 }

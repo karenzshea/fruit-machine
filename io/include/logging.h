@@ -6,25 +6,57 @@
 
 namespace io
 {
-    template<typename Prefix = "   ">
-    struct log
-    {
-        template<typename T>
-        void print(T&& contents)
-        {
-            std::cout << prefix
-                      << std::forward<Contents>(contents)
-                      << std::flush;
-        }
-        template<typename T, typename... Ts>
-        void print(T&& first, Ts... rest)
-        {
-            print(first);
-            return print(rest...);
-        }
+template <typename T, typename = void>
+struct cout_able : std::false_type
+{
+};
 
-        Prefix prefix;
-    };
+template <typename T>
+struct cout_able<
+    T, std::void_t<decltype(operator<<(std::cout, std::declval<T &>()))>>
+    : std::true_type
+{
+};
+
+template <typename T, typename = void>
+struct iterable_cout_able : std::false_type
+{
+};
+
+template <typename T>
+struct iterable_cout_able<T, std::void_t<decltype(std::declval<T &>().begin()),
+                                         decltype(std::declval<T &>().end())>>
+    : std::true_type
+{
+};
+
+// cout object
+template <typename T>
+typename std::enable_if_t<cout_able<T>{}> print(T &&t)
+{
+    std::cout << std::forward<T>(t);
 }
+
+// container
+template <typename T>
+typename std::enable_if_t<std::conjunction_v<
+    std::negation<decltype(cout_able<T>{})>, decltype(iterable_cout_able<T>{})>>
+print(T &&t, const char *delim = "")
+{
+    for (auto const &x : t)
+        std::cout << x << delim;
+
+    std::cout << std::endl;
+}
+
+// variadic
+template <typename T, typename... Ts>
+void print(const char *delim, T &&first, Ts... rest)
+{
+    print(first);
+    print(delim);
+    return print(delim, rest...);
+}
+} // namespace io
 
 #endif

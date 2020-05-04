@@ -1,3 +1,4 @@
+#include "logging.h"
 #include "player.h"
 
 Player::Player(double startMoney) : money(startMoney)
@@ -25,16 +26,14 @@ double const &Player::has() const
     return money;
 }
 
-void Player::announceMoney()
+void Player::infoMoney() const
 {
-    std::cout << "   You have " << money << " ! 💰" << std::endl;
+    io::print(" ", "You have", std::to_string(money), "money! 💰\n");
 }
 
 void Player::play()
 {
     plays += 1;
-    if (plays % 10 == 0)
-        announceMoney();
 }
 
 double const &Player::getHighScore() const

@@ -11,7 +11,7 @@ public:
     void earn(double amt);
     bool pay(double amt);
     double const &has() const;
-    void announceMoney();
+    void infoMoney() const;
     void play();
     double const &getHighScore() const;
     unsigned int getPlays() const;

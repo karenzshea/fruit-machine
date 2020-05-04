@@ -9,10 +9,9 @@
 #include <random>
 #include <string>
 
+#include "logging.h"
 #include "payout.h"
 #include "player.h"
-
-void introduction(double cost);
 
 template <class Container>
 void printContainer(Container const &container)
@@ -44,10 +43,10 @@ public:
         payouts = method.calculate(minPayout, maxPayout, symbols.size());
     }
 
-    void introduce()
+    void info()
     {
-        std::cout << "   Win on this slot machine:\n";
-        printContainer(symbols);
+        io::print("Win on this slot machine:\n");
+        io::print(symbols);
     }
     std::vector<ContentType> getBars()
     {
@@ -138,6 +137,8 @@ void Play(Player &player, SlotMachine<T> &slot_machine)
         return;
 
     player.play();
+    if (player.getPlays() % 10 == 0)
+        player.infoMoney();
 
     auto result = slot_machine.spin(cost);
 
@@ -147,9 +148,9 @@ void Play(Player &player, SlotMachine<T> &slot_machine)
 
     if (payout)
     {
-        std::cout << "   You won " << *payout << "! ✨✨✨" << std::endl;
+        io::print(" ", "You won", std::to_string(*payout), "! ✨✨✨\n");
         player.earn(*payout);
-        player.announceMoney();
+        player.infoMoney();
     }
 }
 

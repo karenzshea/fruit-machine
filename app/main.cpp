@@ -1,7 +1,7 @@
+#include "introduction.h"
 #include "logging.h"
 #include "payout.h"
 #include "slotmachine.h"
-#include "introduction.h"
 
 const double costToPlay{0.25};
 
@@ -40,7 +40,7 @@ int main()
 
     player.infoMoney();
 
-    io::print(" ", "High score:", std::to_string(player.getHighScore()), "\n");
-    io::print(" ", "Play streak:", std::to_string(player.getPlays()), "\n");
-    io::print(" ", "Slot machine made:", std::to_string(slot_machine.getPayload()), "\n");
+    io::print(" ", "High score:", player.getHighScore(), "\n");
+    io::print(" ", "Play streak:", player.getPlays(), "\n");
+    io::print(" ", "Slot machine made:", slot_machine.getPayload(), "\n");
 }

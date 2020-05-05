@@ -28,7 +28,7 @@ double const &Player::has() const
 
 void Player::infoMoney() const
 {
-    io::print(" ", "You have", std::to_string(money), "money! 💰\n");
+    io::print(" ", "You have", money, "money! 💰\n");
 }
 
 void Player::play()

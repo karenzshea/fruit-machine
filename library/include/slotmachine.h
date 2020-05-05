@@ -14,16 +14,6 @@
 #include "player.h"
 
 template <class Container>
-void printContainer(Container const &container)
-{
-    for (auto const &c : container)
-    {
-        std::cout << c;
-    }
-    std::cout << "\n";
-}
-
-template <class Container>
 class SlotMachine
 {
 public:
@@ -142,13 +132,13 @@ void Play(Player &player, SlotMachine<T> &slot_machine)
 
     auto result = slot_machine.spin(cost);
 
-    printContainer(result);
+    io::print(result);
 
     auto payout = slot_machine.processPayout(result);
 
     if (payout)
     {
-        io::print(" ", "You won", std::to_string(*payout), "! ✨✨✨\n");
+        io::print(" ", "You won", *payout, "! ✨✨✨\n");
         player.earn(*payout);
         player.infoMoney();
     }

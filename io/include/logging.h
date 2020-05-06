@@ -7,6 +7,9 @@
 namespace io
 {
 
+// todo ... make configurable
+static const char *prefix = "   ";
+
 template <typename T, typename = void>
 struct has_ostream_op : std::false_type
 {
@@ -38,7 +41,7 @@ struct is_iterable<
 template <typename T>
 std::enable_if_t<has_ostream_op<T>{}> print(T &&t)
 {
-    std::cout << std::forward<T>(t) << std::flush;
+    std::cout << prefix << std::forward<T>(t) << std::flush;
 }
 
 // container
@@ -47,6 +50,7 @@ typename std::enable_if_t<std::conjunction_v<
     std::negation<decltype(has_ostream_op<T>{})>, decltype(is_iterable<T>{})>>
 print(T &&t, const char *delim = "")
 {
+    std::cout << prefix;
     for (auto &&x : t)
     {
         std::cout << std::forward<decltype(x)>(x) << delim;
@@ -56,11 +60,28 @@ print(T &&t, const char *delim = "")
 }
 
 // variadic
+namespace
+{
+template <typename T>
+void _print(T &&)
+{
+    std::cout << std::endl;
+}
+
+template <typename T, typename... Ts>
+void _print(const char *delim, T &&first, Ts... rest)
+{
+    std::cout << delim << std::forward<T>(first) << std::flush;
+    return _print(delim, rest...);
+}
+} // namespace
+
 template <typename T, typename... Ts>
 void print(const char *delim, T &&first, Ts... rest)
 {
-    std::cout << std::forward<T>(first) << delim << std::flush;
-    return print(delim, rest...);
+    std::cout << prefix;
+    std::cout << std::forward<T>(first) << std::flush;
+    return _print(delim, rest...);
 }
 
 } // namespace io

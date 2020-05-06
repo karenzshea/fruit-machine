@@ -25,8 +25,11 @@ struct is_iterable : std::false_type
 };
 
 template <typename T>
-struct is_iterable<T, std::void_t<decltype(std::declval<T &>().begin()),
-                                  decltype(std::declval<T &>().end())>>
+struct is_iterable<
+    T, std::void_t<decltype(std::declval<T &>().begin()),
+                   decltype(std::declval<T &>().end()),
+                   decltype(std::cout << std::declval<
+                                typename std::decay_t<T>::value_type>())>>
     : std::true_type
 {
 };
@@ -44,9 +47,9 @@ typename std::enable_if_t<std::conjunction_v<
     std::negation<decltype(has_ostream_op<T>{})>, decltype(is_iterable<T>{})>>
 print(T &&t, const char *delim = "")
 {
-    for (auto const &x : t)
+    for (auto &&x : t)
     {
-        std::cout << x << delim;
+        std::cout << std::forward<decltype(x)>(x) << delim;
     }
 
     std::cout << std::endl;
